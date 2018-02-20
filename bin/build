@@ -24,6 +24,7 @@ use PhpParser\Node\Stmt\If_;
 use PhpParser\Node\Stmt\Return_;
 use PhpParser\PrettyPrinter\Standard;
 
+// Get the list of confusable characters and their replacements
 preg_match_all(
     '~^(.*?)\s+;\s+(.*?) ;~um',
     file_get_contents('https://www.unicode.org/Public/security/latest/confusables.txt'),
@@ -32,6 +33,7 @@ preg_match_all(
 
 $confusables = array_combine($matches[1], $matches[2]);
 
+// Build the functions file
 $stmts = [];
 
 $factory = new BuilderFactory;
@@ -80,17 +82,6 @@ $function->addStmt(
     )
 );
 
-// preg_split('//u', $str, -1, PREG_SPLIT_NO_EMPTY);
-$splitCharacters = new FuncCall(
-    new Name('preg_split'),
-    [
-        new String_('//u'),
-        new Variable('string'),
-        new LNumber(-1),
-        new ConstFetch(new Name('PREG_SPLIT_NO_EMPTY'))
-    ]
-);
-
 $function->addStmt(
     new Assign(
         new Variable('result'),
@@ -100,7 +91,15 @@ $function->addStmt(
 
 $function->addStmt(
     new Foreach_(
-        $splitCharacters,
+        new FuncCall(
+            new Name('preg_split'),
+            [
+                new String_('//u'),
+                new Variable('string'),
+                new LNumber(-1),
+                new ConstFetch(new Name('PREG_SPLIT_NO_EMPTY'))
+            ]
+        ),
         new Variable('originalCharacter'),
         [
             'stmts' => [

@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+
+use PhpParser\BuilderFactory;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrayItem;
+use PhpParser\Node\Scalar\String_;
+use PhpParser\Node\Stmt\Return_;
+use PhpParser\PrettyPrinter\Standard;
+
+// Get the list of confusable characters and their replacements
+preg_match_all(
+    '~^(.*?)\s+;\s+(.*?) ;~um',
+    file_get_contents('https://www.unicode.org/Public/security/latest/confusables.txt'),
+    $matches
+);
+
+$confusables = array_combine($matches[1], $matches[2]);
+
+$stmts = [];
+
+$factory = new BuilderFactory;
+
+$namespace = $factory->namespace('Confusables');
+
+$stmts[] = $namespace->getNode();
+
+$function = $factory->function('get_confusables')
+    ->setReturnType('array')
+    ->setDocComment(<<<DOC
+/**
+ * Get the confusable characters and their replacements
+ *
+ * @return array
+ */
+DOC
+);
+
+$arrayItems = [];
+
+foreach ($confusables as $confusableCharacter => $replacementCharacter) {
+    $arrayItems[] = new ArrayItem(
+        new String_($replacementCharacter),
+        new String_($confusableCharacter)
+    );
+}
+
+$function->addStmt(
+    new Return_(
+        new Array_(
+            $arrayItems
+        )
+    )
+);
+
+$stmts[] = $function->getNode();
+
+$prettyPrinter = new Standard([
+    'shortArraySyntax' => true
+]);
+
+file_put_contents(
+    __DIR__ . '/../src/confusables.php',
+    $prettyPrinter->prettyPrintFile($stmts)
+);

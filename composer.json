@@ -14,12 +14,21 @@
         "symfony/polyfill-mbstring": "^1.7"
     },
     "autoload": {
-        "files": [ "functions.php" ]
+        "files": [
+            "src/confusables.php",
+            "src/functions.php"
+        ]
     },
     "bin": ["bin/build"],
     "scripts": {
         "post-create-project-cmd": [
-            "bin/build"
+            "bin/build-confusables"
+        ],
+        "test": [
+            "phpunit"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
     }
 }

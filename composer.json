@@ -22,6 +22,9 @@
     "bin": ["bin/build"],
     "scripts": {
         "post-create-project-cmd": [
+            "@build"
+        ],
+        "build": [
             "bin/build-confusables"
         ],
         "test": [

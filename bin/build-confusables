@@ -16,25 +16,27 @@ preg_match_all(
     $matches
 );
 
+$decodeHexCharacterCode = function ($hexCharacterCode) {
+    return mb_chr(hexdec($hexCharacterCode));
+};
+
+$decodeHexCharacterCodes = function ($hexCharacterCodes) use ($decodeHexCharacterCode) {
+    return implode(
+        '',
+        array_map(
+            $decodeHexCharacterCode,
+            explode(' ', $hexCharacterCodes)
+        )
+    );
+};
+
 $confusables = array_combine(
     array_map(
-        function ($hexCharacterCode) {
-            return mb_chr(hexdec($hexCharacterCode));
-        },
+        $decodeHexCharacterCode,
         $matches[1]
     ),
     array_map(
-        function ($hexCharacterCodes) {
-            return implode(
-                '',
-                array_map(
-                    function ($hexCharacterCode) {
-                        return mb_chr(hexdec($hexCharacterCode));
-                    },
-                    explode(' ', $hexCharacterCodes)
-                )
-            );
-        },
+        $decodeHexCharacterCodes,
         $matches[2]
     )
 );
@@ -56,7 +58,7 @@ $function = $factory->function('get_confusables')
  * @return array
  */
 DOC
-);
+    );
 
 $arrayItems = [];
 

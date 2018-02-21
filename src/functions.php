@@ -15,11 +15,8 @@ function unconfuse(string $string) : string
     $confusables = get_confusables();
     $result = '';
     foreach (preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY) as $originalCharacter) {
-        $code = str_pad(strtoupper(dechex(mb_ord($originalCharacter, 'utf-8'))), 4, '0', STR_PAD_LEFT);
-        if (isset($confusables[$code])) {
-            foreach (explode(' ', $confusables[$code]) as $replacementCharacter) {
-                $result .= mb_chr(hexdec($replacementCharacter), 'utf-8');
-            }
+        if (isset($confusables[$originalCharacter])) {
+            $result .= $confusables[$originalCharacter];
         } else {
             $result .= $originalCharacter;
         }

@@ -16,7 +16,28 @@ preg_match_all(
     $matches
 );
 
-$confusables = array_combine($matches[1], $matches[2]);
+$confusables = array_combine(
+    array_map(
+        function ($hexCharacterCode) {
+            return mb_chr(hexdec($hexCharacterCode));
+        },
+        $matches[1]
+    ),
+    array_map(
+        function ($hexCharacterCodes) {
+            return implode(
+                '',
+                array_map(
+                    function ($hexCharacterCode) {
+                        return mb_chr(hexdec($hexCharacterCode));
+                    },
+                    explode(' ', $hexCharacterCodes)
+                )
+            );
+        },
+        $matches[2]
+    )
+);
 
 $stmts = [];
 

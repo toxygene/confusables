@@ -64,6 +64,20 @@ class FunctionsTest extends TestCase
                 'mike'
             )
         );
+
+        $this->assertFalse(
+            is_confusable(
+                'e',
+                'é'
+            )
+        );
+
+        $this->assertFalse(
+            is_confusable(
+                'É',
+                'é'
+            )
+        );
     }
 
     /**

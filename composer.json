@@ -14,10 +14,9 @@
         "symfony/polyfill-mbstring": "^1.7"
     },
     "autoload": {
-        "files": [
-            "src/confusables.php",
-            "src/functions.php"
-        ]
+        "psr-4": {
+            "Confusables\\": "src"
+        }
     },
     "bin": ["bin/build"],
     "scripts": {

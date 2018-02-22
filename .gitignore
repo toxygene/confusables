@@ -1,4 +1,4 @@
-src/confusables.php
+src/Confusables.php
 vendor
 .idea
 .php_cs.cache

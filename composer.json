@@ -1,5 +1,6 @@
 {
     "name": "toxygene/confusables",
+    "description": "This library is an implementation of the skeleton function described in the Confusion Detection section of the Unicode Security Mechanisms technical standard.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -22,7 +23,10 @@
         "bin/build-confusables"
     ],
     "scripts": {
-        "post-create-project-cmd": [
+        "post-package-install": [
+            "@build"
+        ],
+        "post-package-update": [
             "@build"
         ],
         "build": [

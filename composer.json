@@ -18,7 +18,9 @@
             "Confusables\\": "src"
         }
     },
-    "bin": ["bin/build"],
+    "bin": [
+        "bin/build-confusables"
+    ],
     "scripts": {
         "post-create-project-cmd": [
             "@build"

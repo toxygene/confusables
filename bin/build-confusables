@@ -147,6 +147,7 @@ function buildUnconfuseMethod(): ClassMethod
     return new ClassMethod(
         new Name('unconfuse'),
         [
+            'flags' => Class_::MODIFIER_PRIVATE,
             'params' => [
                 new Param(
                     'input',
@@ -237,6 +238,7 @@ function buildSkeletonMethod(): ClassMethod
     return new ClassMethod(
         new Name('skeleton'),
         [
+            'flags' => Class_::MODIFIER_PUBLIC,
             'params' => [
                 new Param(
                     'input',
@@ -303,6 +305,7 @@ function buildIsConfusableMethod(): ClassMethod
     return new ClassMethod(
         'isConfusable',
         [
+            'flags' => Class_::MODIFIER_PUBLIC,
             'params' => [
                 new Param('a', null, 'string'),
                 new Param('b', null, 'string'),

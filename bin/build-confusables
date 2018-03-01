@@ -363,6 +363,10 @@ $prettyPrinter = new Standard([
     'shortArraySyntax' => true
 ]);
 
+@mkdir(
+    __DIR__ . '/../src'
+);
+
 file_put_contents(
     __DIR__ . '/../src/Confusables.php',
     $prettyPrinter->prettyPrintFile($stmts)

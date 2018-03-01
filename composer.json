@@ -22,7 +22,10 @@
         "bin/build-confusables"
     ],
     "scripts": {
-        "post-create-project-cmd": [
+        "post-package-install": [
+            "@build"
+        ],
+        "post-package-update": [
             "@build"
         ],
         "build": [

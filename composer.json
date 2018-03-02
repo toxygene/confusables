@@ -23,12 +23,6 @@
         "bin/build-confusables"
     ],
     "scripts": {
-        "post-package-install": [
-            "@build"
-        ],
-        "post-package-update": [
-            "@build"
-        ],
         "build": [
             "bin/build-confusables"
         ],
